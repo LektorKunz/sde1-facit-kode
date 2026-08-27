@@ -21,7 +21,7 @@ public class UdlaansHaandtering {
             return false;
         }
         fundet.laan();
-        System.out.println(fundetLaaner.getNavn() + " har lånt " + fundet.getTitel() + " (" + java.time.LocalDate.now() + ")");
+        System.out.println("UDLÅN: " + fundet.getTitel() + " -> " + fundetLaaner.getNavn() + " (" + java.time.LocalDate.now() + ")");
         persistens.gem(katalog, laanerRegister);
         return true;
     }
