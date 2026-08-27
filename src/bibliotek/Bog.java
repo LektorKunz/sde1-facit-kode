@@ -1,10 +1,11 @@
 package bibliotek;
 
-public class Bog implements Materiale {
+public class Bog implements Materiale, Reserverbar {
     private String titel;
     private String forfatter;
     private String isbn;
     private boolean tilgaengelig;
+    private Laaner reserveretAf;
 
     public Bog(String titel, String forfatter, String isbn) {
         this.titel = titel;
@@ -40,6 +41,15 @@ public class Bog implements Materiale {
     public void aflever() {
         tilgaengelig = true;
     }
+
+    @Override
+    public void reservér(Laaner laaner) {
+        this.reserveretAf = laaner;
+        System.out.println(laaner.getNavn() + " har reserveret " + titel);
+    }
+
+    // Bemærk (gang 6, uge 44): der er bevidst INGEN getter for reserveretAf i grundfacit — den
+    // tilføjes kun, hvis man løser gang 6's ekstraopgave/øvelse 3, retning B (gem reservationer).
 
     @Override
     public String toString() {
