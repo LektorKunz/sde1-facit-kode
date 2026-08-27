@@ -2,19 +2,26 @@ package bibliotek;
 
 public class Main {
     public static void main(String[] args) {
-        Bibliotek bibliotek = new Bibliotek();
-        bibliotek.tilfoejMateriale(new Bog("Effective Java", "Joshua Bloch", "978-0134685991"));
-        bibliotek.tilfoejMateriale(new Tidsskrift("Ingeniøren", 42));
-        bibliotek.tilfoejMateriale(new Film("The Matrix", 136));
-        bibliotek.tilfoejMateriale(new Lydbog("Sapiens", "Morgan Freeman"));
+        MaterialeKatalog katalog = new MaterialeKatalog();
+        LaanerRegister laanerRegister = new LaanerRegister();
+        UdlaansHaandtering udlaansHaandtering = new UdlaansHaandtering(katalog, laanerRegister);
 
-        bibliotek.registrerLaaner(new Laaner("Anna Nielsen", "L001"));
+        katalog.tilfoej(new Bog("Effective Java", "Joshua Bloch", "978-0134685991"));
+        katalog.tilfoej(new Tidsskrift("Ingeniøren", 42));
+        katalog.tilfoej(new Film("The Matrix", 136));
+        katalog.tilfoej(new Lydbog("Sapiens", "Morgan Freeman"));
+        katalog.tilfoej(new Braetspil("Catan", 4));
+        katalog.tilfoej(new Podcast("Klog på sprog", 87));
 
-        bibliotek.udlaan("The Matrix", "L001");           // en Film, lånt via PRÆCIS samme metode som en Bog
-        bibliotek.udlaan("Ingeniøren (nr. 42)", "L001");  // et Tidsskrift, samme historie
-        bibliotek.udlaan("Sapiens", "L001");               // vores egen fjerde materialetype, samme historie
+        laanerRegister.registrer(new Laaner("Anna Nielsen", "L001"));
+        laanerRegister.registrer(new Fjernlaaner("Cecilie Berg", "L002", "8000"));
+        laanerRegister.registrer(new Underviser("David Poulsen", "L003"));
 
-        for (Materiale m : bibliotek.getMaterialer()) {
+        udlaansHaandtering.udlaan("Effective Java", "L001");
+        udlaansHaandtering.udlaan("Catan", "L002");
+        udlaansHaandtering.udlaan("Klog på sprog", "L003");
+
+        for (Materiale m : katalog.getAlle()) {
             System.out.println(m.getTitel() + " - " + (m.erTilgaengelig() ? "ledig" : "udlånt"));
         }
     }
