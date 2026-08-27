@@ -1,0 +1,20 @@
+# Kompileret Java-output
+out/
+target/
+bin/
+*.class
+
+# IDE-projektfiler
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Data genereret af programmet selv (uge 44's FilPersistens)
+boeger.json
+laanere.json
+
+# OS-støj
+.DS_Store
