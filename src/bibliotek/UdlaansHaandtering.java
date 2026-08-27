@@ -3,10 +3,12 @@ package bibliotek;
 public class UdlaansHaandtering {
     private MaterialeKatalog katalog;
     private LaanerRegister laanerRegister;
+    private Persistens persistens;
 
-    public UdlaansHaandtering(MaterialeKatalog katalog, LaanerRegister laanerRegister) {
+    public UdlaansHaandtering(MaterialeKatalog katalog, LaanerRegister laanerRegister, Persistens persistens) {
         this.katalog = katalog;
         this.laanerRegister = laanerRegister;
+        this.persistens = persistens;
     }
 
     public boolean udlaan(String titel, String laanerId) {
@@ -20,6 +22,7 @@ public class UdlaansHaandtering {
         }
         fundet.laan();
         System.out.println(fundetLaaner.getNavn() + " har lånt " + fundet.getTitel());
+        persistens.gem(katalog, laanerRegister);
         return true;
     }
 
@@ -29,6 +32,22 @@ public class UdlaansHaandtering {
             return false;
         }
         fundet.aflever();
+        persistens.gem(katalog, laanerRegister);
         return true;
+    }
+
+    public boolean reserverMateriale(String titel, String laanerId) {
+        Materiale fundet = katalog.findVedTitel(titel);
+        Laaner fundetLaaner = laanerRegister.findVedId(laanerId);
+        if (fundet == null || fundetLaaner == null) {
+            return false;
+        }
+        if (fundet instanceof Reserverbar reserverbart) {
+            reserverbart.reservér(fundetLaaner);
+            persistens.gem(katalog, laanerRegister);
+            return true;
+        }
+        System.out.println(fundet.getTitel() + " kan ikke reserveres.");
+        return false;
     }
 }
