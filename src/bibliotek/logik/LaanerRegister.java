@@ -1,4 +1,4 @@
-package bibliotek;
+package bibliotek.logik;
 
 import java.util.ArrayList;
 import java.util.List;

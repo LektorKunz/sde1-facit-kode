@@ -1,4 +1,7 @@
-package bibliotek;
+package bibliotek.data;
+
+import bibliotek.logik.MaterialeKatalog;
+import bibliotek.logik.LaanerRegister;
 
 // GANG 5 (uge 43), øvelse 2: en anden Persistens-stand-in (ikke en rigtig fil), der beviser at
 // UdlaansHaandtering ikke skal ændres for at bruge en anden implementering (DIP).

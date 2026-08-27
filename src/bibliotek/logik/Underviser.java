@@ -1,4 +1,4 @@
-package bibliotek;
+package bibliotek.logik;
 
 // GANG 4 (uge 40), øvelse 2: en gyldig Laaner-subtype — kan substitueres overalt en almindelig
 // Laaner bruges, uden at bryde LSP.

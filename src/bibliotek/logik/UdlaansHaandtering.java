@@ -1,4 +1,6 @@
-package bibliotek;
+package bibliotek.logik;
+
+import bibliotek.data.Persistens;
 
 public class UdlaansHaandtering {
     private MaterialeKatalog katalog;

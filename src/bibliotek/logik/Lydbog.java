@@ -1,4 +1,4 @@
-package bibliotek;
+package bibliotek.logik;
 
 // GANG 3 (uge 39), øvelse 1: en fjerde materialetype — beviser at Bibliotek/senere
 // MaterialeKatalog kan håndtere den udelukkende via Materiale-interfacet.

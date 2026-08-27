@@ -1,4 +1,10 @@
-package bibliotek;
+package bibliotek.data;
+
+import bibliotek.logik.Bog;
+import bibliotek.logik.Laaner;
+import bibliotek.logik.LaanerRegister;
+import bibliotek.logik.Materiale;
+import bibliotek.logik.MaterialeKatalog;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -1,4 +1,4 @@
-package bibliotek;
+package bibliotek.logik;
 
 public class Bog implements Materiale, Reserverbar {
     private String titel;

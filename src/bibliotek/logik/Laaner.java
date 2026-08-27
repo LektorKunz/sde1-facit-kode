@@ -1,4 +1,4 @@
-package bibliotek;
+package bibliotek.logik;
 
 public class Laaner {
     private String navn;

@@ -1,4 +1,7 @@
-package bibliotek;
+package bibliotek.data;
+
+import bibliotek.logik.MaterialeKatalog;
+import bibliotek.logik.LaanerRegister;
 
 public interface Persistens {
     void gem(MaterialeKatalog katalog, LaanerRegister laanerRegister);

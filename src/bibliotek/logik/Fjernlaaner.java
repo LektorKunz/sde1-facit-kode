@@ -1,4 +1,4 @@
-package bibliotek;
+package bibliotek.logik;
 
 // GANG 4 (uge 40): LSP-eksempel. Den fulde dagsplan viser FØRST en brudt udgave, der overrider
 // getLaanerId() til at kaste en exception — den er bevidst IKKE med i facit-koden her, kun den

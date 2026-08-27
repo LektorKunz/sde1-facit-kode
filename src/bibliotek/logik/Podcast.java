@@ -1,15 +1,15 @@
-package bibliotek;
+package bibliotek.logik;
 
-// GANG 4 (uge 40): OCP-demonstration — tilføjet UDEN at ændre en eneste linje i
-// MaterialeKatalog eller UdlaansHaandtering.
-public class Braetspil implements Materiale {
+// GANG 4 (uge 40), øvelse 1: elevens eget OCP-bevis — endnu en materialetype, tilføjet uden at
+// ændre MaterialeKatalog eller UdlaansHaandtering.
+public class Podcast implements Materiale {
     private String titel;
-    private int antalSpillere;
+    private int antalEpisoder;
     private boolean tilgaengelig;
 
-    public Braetspil(String titel, int antalSpillere) {
+    public Podcast(String titel, int antalEpisoder) {
         this.titel = titel;
-        this.antalSpillere = antalSpillere;
+        this.antalEpisoder = antalEpisoder;
         this.tilgaengelig = true;
     }
 
