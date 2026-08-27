@@ -1,6 +1,6 @@
 package bibliotek;
 
-public class Bog {
+public class Bog implements Materiale {
     private String titel;
     private String forfatter;
     private String isbn;
@@ -13,6 +13,7 @@ public class Bog {
         this.tilgaengelig = true; // en ny bog er tilgængelig fra start
     }
 
+    @Override
     public String getTitel() {
         return titel;
     }
@@ -25,12 +26,19 @@ public class Bog {
         return isbn;
     }
 
+    @Override
     public boolean erTilgaengelig() {
         return tilgaengelig;
     }
 
-    public void setTilgaengelig(boolean tilgaengelig) {
-        this.tilgaengelig = tilgaengelig;
+    @Override
+    public void laan() {
+        tilgaengelig = false;
+    }
+
+    @Override
+    public void aflever() {
+        tilgaengelig = true;
     }
 
     @Override
