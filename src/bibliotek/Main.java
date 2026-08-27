@@ -4,7 +4,8 @@ public class Main {
     public static void main(String[] args) {
         MaterialeKatalog katalog = new MaterialeKatalog();
         LaanerRegister laanerRegister = new LaanerRegister();
-        UdlaansHaandtering udlaansHaandtering = new UdlaansHaandtering(katalog, laanerRegister);
+        Persistens persistens = new IngenPersistens();
+        UdlaansHaandtering udlaansHaandtering = new UdlaansHaandtering(katalog, laanerRegister, persistens);
 
         katalog.tilfoej(new Bog("Effective Java", "Joshua Bloch", "978-0134685991"));
         katalog.tilfoej(new Tidsskrift("Ingeniøren", 42));
@@ -20,6 +21,9 @@ public class Main {
         udlaansHaandtering.udlaan("Effective Java", "L001");
         udlaansHaandtering.udlaan("Catan", "L002");
         udlaansHaandtering.udlaan("Klog på sprog", "L003");
+
+        udlaansHaandtering.reserverMateriale("The Matrix", "L003");        // virker — Film
+        udlaansHaandtering.reserverMateriale("Ingeniøren (nr. 42)", "L003"); // "kan ikke reserveres"
 
         for (Materiale m : katalog.getAlle()) {
             System.out.println(m.getTitel() + " - " + (m.erTilgaengelig() ? "ledig" : "udlånt"));
