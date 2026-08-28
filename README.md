@@ -5,7 +5,11 @@ Dette er det samlede, kørende facit-projekt for **Software Design 1 — Bibliot
 hver gang der faktisk ændrede koden. `HEAD` på `main` er sluttilstanden efter gang 9 (uge 47):
 lagdelt, filpersistens, alle fem SOLID-principper anvendt.
 
-Se `../design-brief.md` (afsnit 7, "Facit-strategi") for hvorfor projektet er bygget sådan.
+Se `../design-brief.md` (afsnit 7, "Facit-strategi") for hvorfor projektet er bygget sådan, og
+afsnit 3 for **facit-først-formen** (v2): holdet bygger IKKE længere selv koden op fra gang til
+gang — de får hver gang vist/udleveret den relevante del af DETTE repo, og analyserer/modellerer
+den. Det betyder, at et tag som `gang-04` ikke nødvendigvis kun indeholder filer, dagsplanen for
+gang 4 selv nævner — se "Kendt, dokumenteret afvigelse: Liskov (L) og git-historikken" nedenfor.
 
 ## Sådan kompileres og køres projektet
 
@@ -81,7 +85,7 @@ bibliotek/                    ← sammensætningsrod
 | `UdlaansHaandtering` | Gang 4 (SRP, 2-parameters konstruktør) | Gang 5 (3. parameter `Persistens`, `reserverMateriale()`) | |
 | `Braetspil` | Gang 4 (OCP-demo i gennemgangen) | — | |
 | `Podcast` | Gang 4 (øvelse 1: elevens eget OCP-bevis) | — | |
-| `Fjernlaaner`, `Underviser` | Gang 4 (LSP) | — | Kun den KORREKTE `Fjernlaaner` er med — den bevidst brudte demo-udgave fra gennemgangen er ikke en del af facit |
+| `Fjernlaaner`, `Underviser` | **Pædagogisk: Gang 9 (L, flyttet fra gang 4 i v2 — se design-brief.md §5b).** **Git-historisk: committet ved gang-04-tagget** (v1-arv, ikke flyttet i historikken — se afsnittet nedenfor) | — | Kun den KORREKTE `Fjernlaaner` er med — den bevidst brudte demo-udgave fra gennemgangen er ikke en del af facit |
 | `Reserverbar` (interface) | Gang 5 (ISP) | — | |
 | `Persistens` (interface), `IngenPersistens` | Gang 5 (DIP) | — | |
 | `TaelPersistens` | Gang 5 (øvelse 2: elevens eget DIP-bevis) | — | |
@@ -96,11 +100,42 @@ bibliotek/                    ← sammensætningsrod
 ```
 gang-01   Gang 1  (uge 36) — Bog, Laaner, den naive Bibliotek-gudeklasse
 gang-03   Gang 3  (uge 39) — Materiale, Tidsskrift, Film, Lydbog
-gang-04   Gang 4  (uge 40) — SRP-opsplitning, OCP- og LSP-beviser
-gang-05   Gang 5  (uge 43) — Reserverbar (ISP), Persistens/IngenPersistens (DIP)
+gang-04   Gang 4  (uge 40) — SRP-opsplitning, OCP-beviser (+ Fjernlaaner/Underviser, se note nedenfor)
+gang-05   Gang 5  (uge 43) — Reserverbar (ISP), Persistens/IngenPersistens/TaelPersistens (DIP)
 gang-06   Gang 6  (uge 44) — FilPersistens (JSON-filpersistens)
-gang-09   Gang 9  (uge 47) — lagdelt arkitektur (bibliotek.data/logik/praesentation)
+gang-09   Gang 9  (uge 47) — Liskov-fokus (L) + lagdelt arkitektur (bibliotek.data/logik/praesentation)
 ```
+
+### Kendt, dokumenteret afvigelse: Liskov (L) og git-historikken (v2)
+
+Dagsplan-revisionen i v2 flyttede Liskov Substitution (L) fra gang 4 til gang 9 (se
+`../design-brief.md` afsnit 5b — SCO, det parallelle programmeringsfag, underviser ikke arv før
+sin egen uge 44, tre uger efter SD1's oprindelige uge 40). **Dette repos GIT-HISTORIK er IKKE
+flyttet til at følge den nye rækkefølge** — `Fjernlaaner.java`/`Underviser.java` blev committet
+tidligt (samme punkt som det oprindelige `gang-04`-tag, fra v1's konstruktion), og et forsøg på at
+flytte selve tagget (uden at omskrive historikken) blev afprøvet og rullet tilbage her, fordi
+`Main.java`s demo-data allerede refererer til `Fjernlaaner`/`Underviser` fra og med SRP-commit'en
+(`ee1465d`) — en pre-eksisterende uoverensstemmelse i v1's konstruktion af repoet, som først blev
+synlig, da nogen (denne fil) forsøgte at bruge tagget til noget, det oprindeligt ikke var bygget
+til.
+
+**Konsekvens, som den, der underviser gang 4, bør kende:** kigger man i `gang-04`-tagget, ligger
+`Fjernlaaner.java`/`Underviser.java` allerede i `src/bibliotek/` — men gang 4's dagsplan nævner dem
+IKKE, og det er korrekt (verificeret ved den agent, der reviderede filen). Under facit-først-formen
+(v2) er det uproblematisk: holdet ser hele tiden en fuldt fungerende, voksende kodebase, og det er
+helt normalt, at nogle filer endnu ikke er "gangens fokus" — pointen er blot, at dagsplanen ikke må
+PÅSTÅ, at disse to klasser først opstår i gang 9 (det gør de ikke, teknisk set, i denne git-
+historik). Gang 9's dagsplan er skrevet, så den introducerer dem som "lad os endelig se nærmere på
+disse to klasser, I måske har lagt mærke til" snarere end "her er noget helt nyt" — hvilket er
+konsistent med den faktiske kodebase.
+
+**Hvis en fremtidig revision har tid til det:** en fuld, korrekt løsning kræver en `git rebase -i
+--rebase-merges` fra `ee1465d` (SRP-commit'en), der (1) fjerner de to `Fjernlaaner`/`Underviser`-
+linjer fra `Main.java` i `ee1465d` selv, og (2) tilføjer dem tilbage i en ny commit nær
+`gang-09`-tagget. Dette er ikke gjort her, fordi det kræver at gen-afspille historikkens eneste
+merge-commit (gang 8's konstruerede konflikt-øvelse), og risikoen ved at gøre det forkert (et
+ødelagt repo, midt i en levering) blev vurderet højere end værdien af en teknisk perfekt
+commit-rækkefølge, når den pædagogiske dagsplan-tekst allerede er korrekt uden den.
 
 **Ingen tags for gang-02, gang-07 og gang-08** — som instrueret, fordi disse tre gange ikke ændrer
 selve domænekoden:
@@ -162,44 +197,25 @@ blev bygget i.
 
 ## Uoverensstemmelser fundet i dagsplan-filerne, og hvordan de er løst
 
-Ud over de allerede rettede detaljer, opgaven selv nævnte (`LaanerRegister.getAlle()`,
-`FilPersistens`s tomme konstruktør, at kun `Bog` persisteres), stødte konstruktionen af dette
-facit-projekt på følgende yderligere uoverensstemmelser, som er løst pragmatisk nedenfor. Dette er
-tænkt som feedback til den, der reviderer dagsplan-filerne:
+**Status: alle tre punkter nedenfor er RETTET i den efterfølgende revisionsrunde** (bekræftet ved
+grep/manuel gennemgang af de nævnte filer efter v1→v2-revisionen). Beskrivelserne er bevaret her
+som historik/dokumentation af, hvad der blev fundet og rettet — ikke som åbne TODO'er længere:
 
-1. **`FilPersistens`s konstruktør i `gang-09-uge47-softwarearkitektur.md` er selvmodsigende.**
-   Lektion 2 viser en `FilPersistens`-klasse med en TO-parameters konstruktør
-   (`FilPersistens(String materialeFil, String laanerFil)`), men lektion 3's `Main`-eksempel i
-   SAMME fil kalder `new FilPersistens()` — UDEN parametre. Det er internt modstridende, og
-   modstrider desuden `gang-06-uge44-filpersistens.md`s facit, som eksplicit har en TOM
-   konstruktør og interne konstanter (`BOEGER_FIL`, `LAANERE_FIL`). **Løsning:** brugt gang-06's
-   version (tom konstruktør, interne konstanter) som den kanoniske `FilPersistens`, kun flyttet til
-   `bibliotek.data`-pakken i gang 9 — i tråd med opgavens eksplicitte, allerede rettede facts.
-   `gang-09`-filens `FilPersistens`-kodeeksempel bør rettes til at matche gang 6's faktiske
-   implementering (dette er også eksplicit nævnt som en TODO i selve `gang-09`-filens indledende
-   "Til underviseren"-boks, som blev skrevet, før `gang-06` fandtes som fil).
+1. **`FilPersistens`s konstruktør i `gang-09-uge47-softwarearkitektur.md` var selvmodsigende** (en
+   forkert TO-parameters konstruktør i ét afsnit, et korrekt tomt konstruktørkald i et andet).
+   **Rettet:** filen bruger nu konsekvent gang-06's kanoniske, tomme konstruktør med interne
+   konstanter (`BOEGER_FIL`, `LAANERE_FIL`).
 
-2. **Metodenavnet `afleverMateriale` i `gang-07-uge45-git-del1.md` matcher ikke den etablerede
-   metode `aflever`.** Gang 3-6 og gang 9 bruger konsekvent `UdlaansHaandtering.aflever(String
-   titel)`. Gang 7's lektion 3 (`git diff`-demonstration) bruger i stedet et hypotetisk eksempel
-   med metodenavnet `afleverMateriale(String titel)`, indledt med "Forestil jer, at I retter en
-   fejl i...". **Løsning:** behandlet som en illustrativ, ikke-bindende demonstration af selve
-   `git diff`-mekanikken (pointen med afsnittet), ikke en reel ændring af facit-koden. Den
-   faktiske `UdlaansHaandtering` i dette repo beholder navnet `aflever` konsekvent. Bør rettes til
-   `aflever` i `gang-07`-filen for konsistens, hvis filen redigeres igen.
+2. **Metodenavnet `afleverMateriale` i `gang-07-uge45-git-del1.md` matchede ikke den etablerede
+   metode `aflever`.** **Rettet:** alle forekomster (kodeeksempel, `git diff`-illustration,
+   commit-besked-eksempel) bruger nu konsekvent `aflever`.
 
-3. **Gang 7's eksempel-`.gitignore` bruger et andet datafilnavn end det, gang 6 faktisk etablerer.**
-   `gang-07-uge45-git-del1.md` og dens facit-`.gitignore` ekskluderer `bibliotek-data.json` — et
-   generisk pladsholdernavn — mens `gang-06-uge44-filpersistens.md`s facit (og opgavens egne,
-   allerede rettede facts) fastslår, at de faktiske filnavne er `boeger.json` og `laanere.json`.
-   **Løsning:** dette repos `.gitignore` (tilføjet ved "gang 7"-punktet i historikken) ekskluderer
-   de FAKTISKE filnavne, `boeger.json` og `laanere.json`, i stedet for pladsholderen. Bør rettes i
-   `gang-07`-filen, så eksemplet matcher gang 6's facit ordret.
+3. **Gang 7's eksempel-`.gitignore` brugte pladsholdernavnet `bibliotek-data.json`** i stedet for
+   de faktiske filnavne. **Rettet:** eksemplet bruger nu `boeger.json`/`laanere.json`, i tråd med
+   gang 6's facit.
 
-Ingen af de tre punkter forhindrede et rent kompilerende slutresultat — de er alle i illustrative
-kodeeksempler eller i en fil, der eksplicit selv flagger sig som skrevet før sin afhængighed
-(`gang-06`) fandtes. De er dokumenteret her, fordi de er tydelige, konkrete rettelser til næste
-redigeringsrunde af dagsplan-filerne.
+Se også afsnittet "Kendt, dokumenteret afvigelse: Liskov (L) og git-historikken (v2)" ovenfor for
+den ENE uoverensstemmelse, der IKKE er rettet — bevidst, med en begrundelse.
 
 ## Bevidste, dokumenterede afgrænsninger i facit-koden (ikke fejl)
 
